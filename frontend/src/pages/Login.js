@@ -24,7 +24,7 @@ function Login({ setIsAuthenticated }) {
         setIsAuthenticated(true);
         navigate("/");
       } else {
-        alert(data.message || "Invalid email or password.");
+        alert(data.message || "Invalid Email or Password.");
       }
     } catch (error) {
       console.error("Login failed", error);

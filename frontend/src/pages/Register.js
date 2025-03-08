@@ -20,7 +20,7 @@ function Register() {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Registration successful! Please login now.");
+        alert("Registration Successful! Please login now.");
         navigate("/login");
       } else {
         alert(data.message || "Registration failed. Try again.");

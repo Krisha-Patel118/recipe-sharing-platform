@@ -12,7 +12,7 @@ function Home() {
 
   useEffect(() => {
     const defaultRecipes = [
-      { id: 1, title: 'Undhiyu', cuisine: 'Gujarati', ingredients: ['Potato', 'Yam', 'Spices'], instructions: 'Slow cook mixed vegetables and spices.', image: '/images/undhiyu.jpg' },
+      { id: 1, title: 'Undhiyu', cuisine: 'Gujarati Dish', ingredients: ['Potato', 'Yam', 'Spices'], instructions: 'Slow cook mixed vegetables and spices.', image: '/images/undhiyu.jpg' },
       { id: 2, title: 'Masala Dosa', cuisine: 'South Indian', ingredients: ['Dosa batter', 'Potatoes'], instructions: 'Crispy dosa with spiced potato filling.', image: '/images/masala_dosa.jpg' }
     ];
 
