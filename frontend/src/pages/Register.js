@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+const API_URL = "http://localhost:5000/api"; // Change this when deploying
 
 function Register() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-    const existingUser = registeredUsers.find(user => user.email === email);
 
-    if (existingUser) {
-      alert('User already exists with this email. Please login.');
-      navigate('/login');
-    } else {
-      const newUser = { email, password };
-      localStorage.setItem('registeredUsers', JSON.stringify([...registeredUsers, newUser]));
-      alert('Registration successful! Please login now.');
-      navigate('/login');
+    try {
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Registration successful! Please login now.");
+        navigate("/login");
+      } else {
+        alert(data.message || "Registration failed. Try again.");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert("Something went wrong. Please try again.");
     }
   };
 

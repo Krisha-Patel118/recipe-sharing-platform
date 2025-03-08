@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+const API_URL = "http://localhost:5000/api"; // Change this when deploying
+
+fetch(`${API_URL}/recipes`)
+  .then(response => response.json())
+  .then(data => console.log(data)); // Update this to display recipes
 
 function Home() {
   const [recipes, setRecipes] = useState([]);

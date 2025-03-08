@@ -1,22 +1,34 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+const API_URL = "http://localhost:5000/api"; // Change this when deploying
 
 function Login({ setIsAuthenticated }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-    const user = registeredUsers.find(u => u.email === email && u.password === password);
 
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-      setIsAuthenticated(true);
-      navigate('/');
-    } else {
-      alert('Invalid email or password. Please try again or register first.');
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("user", JSON.stringify(data));
+        setIsAuthenticated(true);
+        navigate("/");
+      } else {
+        alert(data.message || "Invalid email or password.");
+      }
+    } catch (error) {
+      console.error("Login failed", error);
+      alert("Something went wrong. Please try again.");
     }
   };
 
